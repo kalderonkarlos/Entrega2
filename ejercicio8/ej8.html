@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Ejercicio 8 - Votaciones en gráfico</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+      .container {
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      .vote-buttons {
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+      .vote-buttons .btn {
+        padding: 10px 20px;
+        border: 2px solid #275db3;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        color: #275db3;
+        background-color: #ffffff;
+        transition: background-color 0.3s;
+        width: 100%;
+      }
+      .vote-buttons .btn:hover {
+        background-color: #275db3;
+        color: #ffffff;
+      }
+      .vote-buttons .reset-button {
+        max-width: 90px;
+        background-color: white;
+        color: #ff4d4d;
+        border: 2px solid #ff4d4d;
+      }
+      .chart-container {
+        max-width: 500px;
+        margin: 40px auto;
+      }
+      canvas {
+        width: 100% !important;
+        height: auto !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Votaciones</h1>
+      <div class="vote-buttons container">
+        <div class="row">
+          <div class="col-sm-4">
+            <button type="button" class="btn" onclick="vote(0)">Socialistas</button>
+          </div>
+          <div class="col-sm-4">
+            <button type="button" class="btn" onclick="vote(1)">Liberales</button>
+          </div>
+          <div class="col-sm-4">
+            <button type="button" class="btn" onclick="vote(2)">Animalistas</button>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-sm-4">
+            <button type="button" class="btn" onclick="vote(3)">Centristas</button>
+          </div>
+          <div class="col-sm-4">
+            <button type="button" class="btn" onclick="vote(4)">Ecologistas</button>
+          </div>
+          <div class="col-sm-4">
+            <button type="button" class="btn reset-button" onclick="reset()">Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="chart-container">
+      <canvas id="myChart"></canvas>
+    </div>
+    <script>
+      const data = {
+        labels: ['Socialistas', 'Liberales', 'Animalistas', 'Centristas', 'Ecologistas'],
+        datasets: [{
+          label: 'Votos',
+          data: [0, 0, 0, 0, 0],
+          backgroundColor: ['#ff6384', '#36a2eb', '#ffce56', '#D1B2FF', '#4caf50'],
+        }]
+      };
+
+      const config = {
+        type: 'pie',
+        data: data,
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: false,
+            }
+          }
+        },
+      };
+
+      let myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+      );
+
+      function vote(index) {
+        data.datasets[0].data[index]++;
+        myChart.update();
+      }
+
+      function reset() {
+        data.datasets[0].data = [0, 0, 0, 0, 0];
+        myChart.update();
+      }
+    </script>
+    <a href="../index.html" class="btn btn-secondary mt-3">Volver al index</a>
+  </body>
+</html>
+
+
